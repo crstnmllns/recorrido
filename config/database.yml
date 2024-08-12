@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: crstn
+  password: 123456
+  host: localhost
+  port: 5432
+
+development:
+  <<: *default
+  database: recorrido
+
+test:
+  <<: *default
+  database: recorrido
+
+production:
+  <<: *default
+  database: recorrido
