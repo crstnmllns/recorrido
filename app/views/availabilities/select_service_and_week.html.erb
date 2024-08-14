@@ -1,0 +1,15 @@
+<h1>Seleccionar Servicio y Semana</h1>
+
+<%= form_with url: availabilities_path, method: :get, local: true do |form| %>
+  <div class="form-group">
+    <%= form.label :service_id, "Servicio" %>
+    <%= form.collection_select :service_id, Service.all, :id, :name, { prompt: "Seleccione un servicio" }, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :week_id, "Semana" %>
+    <%= form.collection_select :week_id, Week.where("start_date >= ?", Date.today).limit(5), :id, :start_date, { prompt: "Seleccione una semana" }, class: "form-control" %>
+  </div>
+
+  <%= form.submit "Ver Disponibilidad", class: "btn btn-primary" %>
+<% end %>

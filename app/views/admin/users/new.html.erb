@@ -1,0 +1,38 @@
+<div class="container d-flex align-items-center justify-content-center min-vh-100">
+  <div class="card p-4 shadow-lg" style="width: 100%; max-width: 400px; background-color: #f8f9fa;">
+    <div class="card-body text-center">
+      <h2 class="card-title text-center mb-4">Crear Nuevo Usuario</h2>
+
+      <%= form_with(model: @user, url: admin_users_path, method: :post, local: true) do |form| %>
+        <div class="mb-3 text-center">
+          <%= form.label :name, class: "form-label d-block" %>
+          <%= form.text_field :name, class: "form-control mx-auto", autofocus: true, style: "max-width: 300px;" %>
+        </div>
+
+        <div class="mb-3 text-center">
+          <%= form.label :email, class: "form-label d-block" %>
+          <%= form.email_field :email, class: "form-control mx-auto", autocomplete: "email", style: "max-width: 300px;" %>
+        </div>
+
+        <div class="mb-3 text-center">
+          <%= form.label :password, class: "form-label d-block" %>
+          <%= form.password_field :password, class: "form-control mx-auto", autocomplete: "new-password", style: "max-width: 300px;" %>
+        </div>
+
+        <div class="mb-3 text-center">
+          <%= form.label :password_confirmation, class: "form-label d-block" %>
+          <%= form.password_field :password_confirmation, class: "form-control mx-auto", autocomplete: "new-password", style: "max-width: 300px;" %>
+        </div>
+
+        <div class="mb-3 text-center">
+          <%= form.label :color, class: "form-label d-block" %>
+          <%= form.text_field :color, class: "form-control mx-auto", style: "max-width: 300px;" %>
+        </div>
+
+        <div class="d-grid">
+          <%= form.submit "Crear Usuario", class: "btn btn-success" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="container d-flex align-items-center justify-content-center min-vh-100">
+  <div class="card p-4 shadow-lg" style="width: 100%; max-width: 400px; background-color: #f8f9fa;">
+    <div class="card-body text-center">
+      <h2 class="card-title text-center mb-4">Editar Usuario</h2>
+
+      <%= form_with(model: @user, url: admin_user_path(@user), method: :patch, local: true) do |form| %>
+        <div class="mb-3 text-center">
+          <%= form.label :name, class: "form-label d-block" %>
+          <%= form.text_field :name, class: "form-control mx-auto", style: "max-width: 300px;" %>
+        </div>
+
+        <div class="mb-3 text-center">
+          <%= form.label :email, class: "form-label d-block" %>
+          <%= form.email_field :email, class: "form-control mx-auto", style: "max-width: 300px;" %>
+        </div>
+
+        <div class="mb-3 text-center">
+          <%= form.label :role, class: "form-label d-block" %>
+          <%= form.select :role, ['admin', 'ingeniero'], class: "form-control mx-auto", style: "max-width: 300px; padding: 8px 12px;" %>
+        </div>
+
+        <div class="d-grid">
+          <%= form.submit "Guardar Cambios", class: "btn btn-success" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

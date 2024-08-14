@@ -1,0 +1,35 @@
+<h1>Disponibilidad de Guardias - <%= @service.name %> - Semana <%= @week.start_date %> a <%= @week.end_date %></h1>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Hora</th>
+      <% @days.each do |day| %>
+        <th><%= day.strftime("%A %d de %B") %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @time_blocks.each do |time_block| %>
+      <tr>
+        <td><%= time_block %></td>
+        <% @days.each do |day| %>
+          <td>
+            <% availability = @availabilities.find { |a| a.day == day && a.time_block == time_block } %>
+            <% if availability %>
+              <div style="background-color: <%= availability.user.color %>;">
+                <%= availability.user.name %>
+              </div>
+            <% else %>
+              <div style="background-color: red;">
+                ⚠ No asignado
+              </div>
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Editar Disponibilidad', edit_availability_path, class: 'btn btn-success' %>

@@ -1,0 +1,20 @@
+<h1>Editar Disponibilidad</h1>
+
+<%= form_for(@availability) do |f| %>
+  <div class="mb-3">
+    <%= f.label :start_time, "Hora de Inicio" %>
+    <%= f.time_select :start_time, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :end_time, "Hora de Fin" %>
+    <%= f.time_select :end_time, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :available, "Disponible" %>
+    <%= f.check_box :available %>
+  </div>
+
+  <%= f.submit "Actualizar Disponibilidad", class: "btn btn-primary" %>
+<% end %>
