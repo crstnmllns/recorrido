@@ -1,0 +1,78 @@
+<div class="container mt-5">
+  <h1 class="mb-4">Filtrar Turnos por Servicio y Semana</h1>
+
+  <%= form_with url: shifts_path, method: :get, local: false, class: "mb-4", remote: true do %>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <%= label_tag :service_id, "Servicio", class: "form-label" %>
+          <%= select_tag :service_id, options_from_collection_for_select(@services, :id, :name, params[:service_id]), include_blank: "Selecciona un servicio", class: "form-select", onchange: "this.form.submit();" %>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <%= label_tag :week_id, "Semana", class: "form-label" %>
+          <%= select_tag :week_id, options_from_collection_for_select(@weeks, :id, :number_and_year, params[:week_id]), include_blank: "Selecciona una semana", class: "form-select", onchange: "this.form.submit();" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-end">
+      <%= submit_tag "Buscar", class: "btn btn-success mt-3" %>
+    </div>
+  <% end %>
+
+  <div id="shifts-content">
+    <% if @shifts.present? %>
+      <div class="card mt-5">
+        <div class="card-header bg-primary text-white">
+          <h2 class="mb-0">Turnos para <%= @service.name %> - Semana <%= @week.number_and_year %></h2>
+        </div>
+        <div class="card-body">
+          <p>Del <%= @week.start_date %> al <%= @week.end_date %></p>
+
+          <table class="table table-bordered">
+            <thead class="table-light">
+              <tr>
+                <th>Hora</th>
+                <% @week.days.each do |day| %>
+                  <th><%= day.strftime('%A %d de %B') %></th>
+                <% end %>
+              </tr>
+            </thead>
+            <tbody>
+            <% @service.contract_hours.each do |hour| %>
+              <tr>
+                <td><%= hour %></td>
+                <% @week.days.each do |day| %>
+                  <% shift = @shifts.find { |s| s.day == day.strftime('%A') && s.start_time.strftime('%H:%M') == hour } %>
+                  <% if shift && shift.user %>
+                    <td style="background-color: <%= shift.user.color %>;">
+                      <%= shift.user.name %>
+                    </td>
+                  <% else %>
+                     <td class="bg-secondary text-white text-center">
+                      ⚠
+                    </td>
+                  <% end %>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+          </table>
+        </div>
+      </div>
+    <% else %>
+      <div class="alert alert-info mt-4" role="alert">
+        No se encontraron turnos para el servicio y la semana seleccionados.
+      </div>
+    <% end %>
+  </div>
+
+  <% if @service && @week %>
+    <div class="mt-4 text-end">
+      <%= link_to "Editar Disponibilidad", edit_multiple_availabilities_path(service_id: @service.id, week_id: @week.id), class: "btn btn-warning" %>
+    </div>
+  <% end %>
+</div>

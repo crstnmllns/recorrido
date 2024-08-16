@@ -19,4 +19,16 @@ class User < ApplicationRecord
   def ingeniero?
     role == 'ingeniero'
   end
+
+  def available_for_shift?(shift)
+    availabilities.where(
+      start_time: shift.start_time,
+      end_time: shift.end_time,
+      available: true
+    ).exists?
+  end
+
+  def assigned_hours
+    shifts.sum { |shift| shift.duration_in_hours }
+  end
 end

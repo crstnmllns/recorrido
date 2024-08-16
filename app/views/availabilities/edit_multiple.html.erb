@@ -1,0 +1,38 @@
+<div class="container mt-5">
+  <h1 class="mb-4">Editar Disponibilidad - <%= @service.name %> - Semana <%= @week.number_and_year %></h1>
+  <p>Del <%= @week.start_date %> al <%= @week.end_date %></p>
+
+  <%= form_with url: update_multiple_availabilities_path(service_id: @service.id, week_id: @week.id), method: :post, local: true do %>
+    
+    <% @week.days.each do |day| %>
+      <div class="mb-5">
+        <h3><%= day.strftime('%A %d de %B') %></h3>
+        <table class="table table-bordered">
+          <thead class="table-light">
+            <tr>
+              <th>Hora</th>
+              <th>Disponibilidad</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @shifts.select { |shift| shift.day == day.strftime('%A') }.each do |shift| %>
+              <% availability = @availabilities.find { |a| a.start_time == shift.start_time && a.end_time == shift.end_time } %>
+              <tr>
+                <td><%= shift.start_time.strftime('%H:%M') %> - <%= shift.end_time.strftime('%H:%M') %></td>
+                <td>
+                  <div class="form-check">
+                    <%= check_box_tag "availabilities[#{shift.id}]", "1", availability.present?, class: "form-check-input" %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+
+    <div class="text-end">
+      <%= submit_tag "Guardar Cambios", class: "btn btn-success mt-3" %>
+    </div>
+  <% end %>
+</div>

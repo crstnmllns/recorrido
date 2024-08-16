@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
     if resource.admin?
       admin_users_path
     elsif resource.ingeniero?
-      availabilities_path
+      shifts_path  
     else
       root_path
     end

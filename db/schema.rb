@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_13_184059) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_16_000810) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -48,7 +48,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_13_184059) do
   end
 
   create_table "shifts", force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.bigint "service_id", null: false
     t.bigint "week_id", null: false
     t.time "start_time", null: false
@@ -56,6 +56,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_13_184059) do
     t.string "status", default: "sin asignar", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "day"
     t.index ["service_id"], name: "index_shifts_on_service_id"
     t.index ["user_id"], name: "index_shifts_on_user_id"
     t.index ["week_id"], name: "index_shifts_on_week_id"
@@ -81,6 +82,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_13_184059) do
     t.date "end_date", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "number"
   end
 
   add_foreign_key "availabilities", "services"
